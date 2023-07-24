@@ -29,6 +29,7 @@ async function run() {
     // await client.connect();
 
     const collegeCollection = client.db('collegeClutch').collection('colleges');
+    const bookingCollection = client.db('collegeClutch').collection('bookings');
 
     app.get('/colleges', async(req, res) =>{
         const result = await collegeCollection.find().toArray();
@@ -39,6 +40,13 @@ async function run() {
         const id = req.params.id;
         const query = { _id: new ObjectId(id)}
         const result = await collegeCollection.findOne(query);
+        res.send(result);
+    })
+
+    // booking
+    app.post('/booking', async(req, res)=>{
+        const booking = req.body;
+        const result = await bookingCollection.insertOne(booking);
         res.send(result);
     })
 
